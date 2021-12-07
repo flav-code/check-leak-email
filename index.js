@@ -64,6 +64,7 @@ client.on('messageCreate', async (message) => {
             const cooldown = 7;
             client.cooldownedUsers.set(userKey, cooldown + currentDate);
 
+
             const data = await axios.get(`https://leaked.space/api/api.php?value=${args[0]}&type=${command === "email" ? 'auto' : command}&key=${config.api.key}`).then(r => r.data).catch(() => null)
 
             console.log(data)
@@ -94,7 +95,7 @@ client.on('messageCreate', async (message) => {
                     data.result.slice(i0, i1).map(x => {
 
                         const mail = x.line.split(':')[0];
-                        const password = x.line.split(':')[1];
+                        const password = x.line.split(':')[1] ?? x.line.split(' | ')[1];
                         desc += `**-** \`${mail}\` **|** \`${password.slice(0, (Math.floor(password.length / 3)) * 2)}${"*".repeat(Math.floor(password.length / 3) + 1)}\` \n`
 
                     });
