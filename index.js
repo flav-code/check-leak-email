@@ -23,7 +23,8 @@ client.on('ready', () => {
 
 client.cooldownedUsers = new Collection();
 
-const prefix = config.prefix;
+const prefix = config.prefix
+
 
 
 client.on('messageCreate', async (message) => {
@@ -41,18 +42,13 @@ client.on('messageCreate', async (message) => {
 
     if (message.channel.type === "DM") {
 
-        if (command === "email") {
 
 
 
-            if (!args[0]) {
-                const embed = new MessageEmbed()
-                    .setColor('RED')
-                    .setDescription(`Missing argument\n\`${prefix}email <Email>\``)
 
-                return message.reply({ embeds: [embed] });
-            }
 
+
+        async function code() {
 
             const userKey = `${message.author.id}`;
             const cooldownTime = client.cooldownedUsers.get(userKey);
@@ -68,8 +64,7 @@ client.on('messageCreate', async (message) => {
             const cooldown = 7;
             client.cooldownedUsers.set(userKey, cooldown + currentDate);
 
-
-            const data = await axios.get(`https://leaked.space/api/api.php?value=${args[0]}&type=auto&key=${config.api.key}`).then(r => r.data).catch(() => null)
+            const data = await axios.get(`https://leaked.space/api/api.php?value=${args[0]}&type=${command === "email" ? 'auto' : command}&key=${config.api.key}`).then(r => r.data).catch(() => null)
 
             console.log(data)
 
@@ -210,15 +205,91 @@ client.on('messageCreate', async (message) => {
 
         }
 
-        return
+
+
+
+
+
+
+
+
+
+        if (command === "email") {
+
+
+
+            if (!args[0]) {
+                const embed = new MessageEmbed()
+                    .setColor('RED')
+                    .setDescription(`Missing argument\n\`${prefix}${command} <Email>\``)
+
+                return message.reply({ embeds: [embed] });
+            }
+
+            code();
+
+            return;
+
+        } else if (command === "mc") {
+
+
+            if (!args[0]) {
+                const embed = new MessageEmbed()
+                    .setColor('RED')
+                    .setDescription(`Missing argument\n\`${prefix}${command} <Email>\``)
+
+                return message.reply({ embeds: [embed] });
+            }
+
+
+            code();
+
+            return;
+
+        } else if (command === "login") {
+
+
+            if (!args[0]) {
+                const embed = new MessageEmbed()
+                    .setColor('RED')
+                    .setDescription(`Missing argument\n\`${prefix}${command} <Email>\``)
+
+                return message.reply({ embeds: [embed] });
+            }
+
+
+            code();
+
+            return;
+
+
+
+
+        } else if (command === "hash") {
+
+
+            if (!args[0]) {
+                const embed = new MessageEmbed()
+                    .setColor('RED')
+                    .setDescription(`Missing argument\n\`${prefix}${command} <Email>\``)
+
+                return message.reply({ embeds: [embed] });
+            }
+
+
+            code();
+
+            return;
+
+        }
+
     }
 
-
-
-
-
-
 })
+
+
+
+
 
 
 client.login(config.token);
