@@ -65,7 +65,7 @@ client.on('messageCreate', async (message) => {
                 }
             }
 
-            const cooldown = 5;
+            const cooldown = 7;
             client.cooldownedUsers.set(userKey, cooldown + currentDate);
 
 
