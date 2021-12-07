@@ -1,4 +1,4 @@
-const { Client, Intents, MessageEmbed, MessageButton, MessageActionRow } = require('discord.js');
+const { Client, Intents, MessageEmbed, MessageButton, MessageActionRow, Collection } = require('discord.js');
 const axios = require('axios');
 
 const client = new Client({
@@ -21,6 +21,8 @@ client.on('ready', () => {
 
 });
 
+client.cooldownedUsers = new Collection();
+
 const prefix = config.prefix;
 
 
@@ -42,6 +44,7 @@ client.on('messageCreate', async (message) => {
         if (command === "email") {
 
 
+
             if (!args[0]) {
                 const embed = new MessageEmbed()
                     .setColor('RED')
@@ -49,6 +52,22 @@ client.on('messageCreate', async (message) => {
 
                 return message.reply({ embeds: [embed] });
             }
+
+
+            const userKey = `${message.author.id}`;
+            const cooldownTime = client.cooldownedUsers.get(userKey);
+            const currentDate = parseInt(Date.now() / 1000);
+            if (cooldownTime) {
+                const isExpired = cooldownTime <= currentDate;
+                const remainingSeconds = cooldownTime - currentDate;
+                if (!isExpired) {
+                    return message.react("🕒");
+                }
+            }
+
+            const cooldown = 5;
+            client.cooldownedUsers.set(userKey, cooldown + currentDate);
+
 
             const data = await axios.get(`https://leaked.space/api/api.php?value=${args[0]}&type=auto&key=${config.api.key}`).then(r => r.data).catch(() => null)
 
