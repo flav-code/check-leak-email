@@ -99,7 +99,8 @@ client.on('messageCreate', async (message) => {
                             // Updates variables
                             i0 -= length;
                             i1 -= length;
-                            page += 1;
+
+                            page -= 1;
 
                             // if there is no guild to display, delete the message
                             if (i0 < 0) {
@@ -137,10 +138,10 @@ client.on('messageCreate', async (message) => {
 
                             desc = "";
 
-
                             // Updates variables
                             i0 += length;
                             i1 += length;
+
                             page += 1;
 
                             // if there is no guild to display, delete the message
