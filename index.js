@@ -44,15 +44,23 @@ client.on('messageCreate', async (message) => {
 
             if (!args[0]) {
                 const embed = new MessageEmbed()
-                .setColor('RED')
-                .setDescription(`Missing argument\n\`${prefix}email <Email>\``)
+                    .setColor('RED')
+                    .setDescription(`Missing argument\n\`${prefix}email <Email>\``)
 
-            return message.reply({ embeds: [embed] });
+                return message.reply({ embeds: [embed] });
             }
 
-            const data = await axios.get(`https://leaked.space/api/api.php?value=${args[0]}&type=auto&key=${config.api.key}`).then(r => r.data)
+            const data = await axios.get(`https://leaked.space/api/api.php?value=${args[0]}&type=auto&key=${config.api.key}`).then(r => r.data).catch(() => null)
 
             console.log(data)
+
+            if (!data) {
+                const embed = new MessageEmbed()
+                    .setColor('RED')
+                    .setDescription(`Error !`)
+
+                return message.reply({ embeds: [embed] });
+            }
 
             if (data.success) {
 
@@ -82,6 +90,7 @@ client.on('messageCreate', async (message) => {
 
                 const embed = new MessageEmbed()
                     .setColor('#947cea')
+                    .setThumbnail('https://media.discordapp.net/attachments/902502488681369660/917873865072459836/logo-rond.png')
                     .setTitle(`${data.found} Data found for ${args[0]}`)
                     .setDescription(description())
                     .addField('Text Zone', `To see the full password, buy the premium !`)
@@ -151,6 +160,7 @@ client.on('messageCreate', async (message) => {
 
                         const edited_embed = new MessageEmbed()
                             .setColor('#947cea')
+                            .setThumbnail('https://media.discordapp.net/attachments/902502488681369660/917873865072459836/logo-rond.png')
                             .setTitle(`${data.found} Data found for ${args[0]}`)
                             .setDescription(description())
                             .addField('Text Zone', `To see the full password, buy the premium !`)
