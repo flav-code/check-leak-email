@@ -215,7 +215,7 @@ client.on('messageCreate', async (message) => {
 
 
 
-        if (command === "email") {
+        if (command === "email" || command === "auto") {
 
 
 
@@ -237,7 +237,7 @@ client.on('messageCreate', async (message) => {
             if (!args[0]) {
                 const embed = new MessageEmbed()
                     .setColor('RED')
-                    .setDescription(`Missing argument\n\`${prefix}${command} <Email>\``)
+                    .setDescription(`Missing argument\n\`${prefix}${command} <mc name>\``)
 
                 return message.reply({ embeds: [embed] });
             }
@@ -253,7 +253,7 @@ client.on('messageCreate', async (message) => {
             if (!args[0]) {
                 const embed = new MessageEmbed()
                     .setColor('RED')
-                    .setDescription(`Missing argument\n\`${prefix}${command} <Email>\``)
+                    .setDescription(`Missing argument\n\`${prefix}${command} <identifiant>\``)
 
                 return message.reply({ embeds: [embed] });
             }
@@ -272,7 +272,7 @@ client.on('messageCreate', async (message) => {
             if (!args[0]) {
                 const embed = new MessageEmbed()
                     .setColor('RED')
-                    .setDescription(`Missing argument\n\`${prefix}${command} <Email>\``)
+                    .setDescription(`Missing argument\n\`${prefix}${command} <hash>\``)
 
                 return message.reply({ embeds: [embed] });
             }
